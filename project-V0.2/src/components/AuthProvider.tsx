@@ -63,8 +63,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) throw error;
       toast.success('Successfully signed up! Please check your email for verification.');
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'An error occurred during sign up');
       throw error;
     }
   };
@@ -78,8 +78,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       if (error) throw error;
       toast.success('Successfully signed in!');
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'An error occurred during sign in');
       throw error;
     }
   };
@@ -89,8 +89,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       const { error } = await supabase.auth.signOut();
       if (error) throw error;
       toast.success('Successfully signed out!');
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'An error occurred during sign out');
       throw error;
     }
   };
@@ -102,8 +102,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       if (error) throw error;
       toast.success('Password reset email sent! Please check your inbox.');
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'An error occurred during password reset');
       throw error;
     }
   };
@@ -115,8 +115,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       });
       if (error) throw error;
       toast.success('Password updated successfully!');
-    } catch (error) {
-      toast.error(error.message);
+    } catch (error: any) {
+      toast.error(error?.message || 'An error occurred while updating password');
       throw error;
     }
   };
