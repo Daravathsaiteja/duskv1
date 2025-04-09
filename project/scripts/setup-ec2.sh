@@ -28,7 +28,7 @@ chown -R ubuntu:ubuntu /var/www/my-legendary-app
 # Switch to app directory
 cd /var/www/my-legendary-app
 
-# Skip git clone if package.json exists (meaning files are already there)
+# Clone the repository with the correct path
 if [ ! -f "package.json" ]; then
     echo "No existing application found, cloning repository..."
     # Remove existing files if directory is not empty
@@ -36,10 +36,9 @@ if [ ! -f "package.json" ]; then
         rm -rf /var/www/my-legendary-app/*
     fi
     git clone https://github.com/Daravathsaiteja/duskv1.git .
-
-    #git clone https://github.com/yourusername/my-legendary-app.git .
-else
-    echo "Existing application found, skipping clone..."
+    # Move files from project directory to current directory
+    mv project/* project/.* . 2>/dev/null || true
+    rm -rf project
 fi
 
 # Create package-lock.json if it doesn't exist
