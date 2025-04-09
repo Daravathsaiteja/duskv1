@@ -29,14 +29,14 @@ api.interceptors.response.use(
 
 export const get = async <T>(url: string): Promise<ApiResponse<T>> => {
   try {
-    const response = await api.get<ApiResponse<T>>(url);
+    const response = await api.get<T>(url);
     return {
-      data: response.data,
+      data: response.data as T,
       error: null,
     };
   } catch (error: any) {
     return {
-      data: null as unknown as T,
+      data: null as T,
       error: error?.response?.data?.message || 'An error occurred',
     };
   }
@@ -47,14 +47,14 @@ export const post = async <T>(
   data: unknown
 ): Promise<ApiResponse<T>> => {
   try {
-    const response = await api.post<ApiResponse<T>>(url, data);
+    const response = await api.post<T>(url, data);
     return {
-      data: response.data,
+      data: response.data as T,
       error: null,
     };
   } catch (error: any) {
     return {
-      data: null as unknown as T,
+      data: null as T,
       error: error?.response?.data?.message || 'An error occurred',
     };
   }
