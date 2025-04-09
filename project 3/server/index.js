@@ -16,6 +16,7 @@ const __dirname = dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 3000;
 const HOST = process.env.HOST || '0.0.0.0';
+const APP_ROOT = process.env.APP_ROOT || process.cwd();
 
 // Middleware
 app.use(cors());
@@ -33,8 +34,7 @@ app.use(
 
 // Serve static files in production
 if (process.env.NODE_ENV === 'production') {
-  // Use absolute path to dist directory
-  const distPath = join(__dirname, '..', 'dist');
+  const distPath = join(APP_ROOT, 'dist');
   console.log('Serving static files from:', distPath);
   app.use(express.static(distPath));
 }
@@ -47,7 +47,7 @@ app.get('/api/health', (req, res) => {
 // Serve index.html for all other routes in production
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
-    const indexPath = join(__dirname, '..', 'dist', 'index.html');
+    const indexPath = join(APP_ROOT, 'dist', 'index.html');
     console.log('Serving index.html from:', indexPath);
     res.sendFile(indexPath);
   });
@@ -61,4 +61,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, HOST, () => {
   console.log(`Server running on ${HOST}:${PORT} in ${process.env.NODE_ENV} mode`);
+  console.log('App root directory:', APP_ROOT);
 });
