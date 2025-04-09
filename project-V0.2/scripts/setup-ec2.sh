@@ -10,11 +10,11 @@ apt install -y nodejs
 # Install PM2 globally
 npm install -g pm2
 
-# Install Nginx
-apt install -y nginx
-
 # Install Git
 apt install -y git
+
+# Install Nginx
+apt install -y nginx
 
 # Configure Nginx
 cat > /etc/nginx/sites-available/my-legendary-app << 'EOF'
