@@ -10,7 +10,8 @@ module.exports = {
     env: {
       NODE_ENV: 'production',
       PORT: 3000,
-      HOST: '0.0.0.0'
+      HOST: '0.0.0.0',
+      APP_ROOT: '/home/project'
     }
   }]
 };
