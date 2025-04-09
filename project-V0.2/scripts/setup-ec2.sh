@@ -43,7 +43,7 @@ chown -R ubuntu:ubuntu /var/www/my-legendary-app
 
 # Clone the repository (you'll need to replace with your repo URL)
 cd /var/www/my-legendary-app
-git clone https://github.com/yourusername/my-legendary-app.git .
+git clone https://github.com/Daravathsaiteja/duskv1.git
 
 # Install dependencies and build
 npm ci
