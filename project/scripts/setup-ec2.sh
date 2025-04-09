@@ -28,26 +28,34 @@ chown -R ubuntu:ubuntu /var/www/my-legendary-app
 # Switch to app directory
 cd /var/www/my-legendary-app
 
-# Clone the repository with the correct path
-if [ ! -f "package.json" ]; then
-    echo "No existing application found, cloning repository..."
-    # Remove existing files if directory is not empty
-    if [ "$(ls -A /var/www/my-legendary-app)" ]; then
-        rm -rf /var/www/my-legendary-app/*
-    fi
-    git clone https://github.com/Daravathsaiteja/duskv1.git .
-    # Move files from project directory to current directory
-    mv project/* project/.* . 2>/dev/null || true
+# Clone and setup the repository
+echo "Setting up application..."
+# Remove existing files if directory is not empty
+rm -rf /var/www/my-legendary-app/*
+
+# Clone the repository
+git clone https://github.com/Daravathsaiteja/duskv1.git .
+
+# Copy project files to the correct location
+if [ -d "project" ]; then
+    cp -r project/* .
+    cp -r project/.* . 2>/dev/null || true
     rm -rf project
 fi
 
-# Create package-lock.json if it doesn't exist
-if [ ! -f "package-lock.json" ]; then
-    npm install --package-lock-only
+# Verify package.json exists
+if [ ! -f "package.json" ]; then
+    echo "Error: package.json not found!"
+    exit 1
 fi
 
-# Install dependencies and build
+# Install dependencies
+echo "Installing dependencies..."
+npm install --package-lock-only
 npm ci
+
+# Build the application
+echo "Building application..."
 npm run build
 
 # Configure Nginx
@@ -105,7 +113,11 @@ EOF
 ln -sf /etc/nginx/sites-available/my-legendary-app /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 
-# Configure PM2 with explicit path
+# Set correct permissions
+chown -R ubuntu:ubuntu /var/www/my-legendary-app
+
+# Start the application with PM2
+echo "Starting application..."
 sudo -E env "PATH=$PATH" pm2 start ecosystem.config.cjs
 sudo -E env "PATH=$PATH" pm2 save
 sudo -E env "PATH=$PATH" pm2 startup
