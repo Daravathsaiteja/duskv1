@@ -20,7 +20,7 @@ export default function CategoryPage() {
   const { category } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState<Filters>({
+  const [filters] = useState<Filters>({
     gender: null,
     sizes: [],
     colors: [],
