@@ -7,6 +7,9 @@ apt update && apt upgrade -y
 curl -fsSL https://deb.nodesource.com/setup_20.x | bash -
 apt install -y nodejs
 
+# Add global npm packages to PATH
+export PATH=$PATH:/usr/local/bin
+
 # Install PM2 globally
 npm install -g pm2
 
@@ -29,6 +32,8 @@ server {
         proxy_set_header Connection 'upgrade';
         proxy_set_header Host $host;
         proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
     }
 }
 EOF
@@ -43,7 +48,7 @@ chown -R ubuntu:ubuntu /var/www/my-legendary-app
 
 # Clone the repository (you'll need to replace with your repo URL)
 cd /var/www/my-legendary-app
-git clone https://github.com/Daravathsaiteja/duskv1.git
+git clone https://github.com/yourusername/my-legendary-app.git .
 
 # Install dependencies and build
 npm ci
