@@ -3,14 +3,30 @@ import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import { Product } from '@/lib/types';
 import { ProductCard } from '@/components/ProductCard';
-import { useFilterStore } from '@/lib/store';
 import toast from 'react-hot-toast';
+
+interface Filters {
+  gender: string | null;
+  sizes: string[];
+  colors: string[];
+  priceRange: {
+    min: number;
+    max: number;
+  };
+  sortBy: string;
+}
 
 export default function CategoryPage() {
   const { category } = useParams();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const filters = useFilterStore();
+  const [filters, setFilters] = useState<Filters>({
+    gender: null,
+    sizes: [],
+    colors: [],
+    priceRange: { min: 0, max: 500 },
+    sortBy: 'newest'
+  });
 
   useEffect(() => {
     const fetchProducts = async () => {
