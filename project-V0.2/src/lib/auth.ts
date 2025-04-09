@@ -1,5 +1,4 @@
 import { createContext, useContext } from 'react';
-import { supabase } from './supabase';
 
 export type AuthUser = {
   id: string;
