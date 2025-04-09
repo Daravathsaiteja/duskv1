@@ -35,7 +35,9 @@ if [ ! -f "package.json" ]; then
     if [ "$(ls -A /var/www/my-legendary-app)" ]; then
         rm -rf /var/www/my-legendary-app/*
     fi
-    git clone https://github.com/yourusername/my-legendary-app.git .
+    git clone https://github.com/Daravathsaiteja/duskv1.git .
+
+    #git clone https://github.com/yourusername/my-legendary-app.git .
 else
     echo "Existing application found, skipping clone..."
 fi
