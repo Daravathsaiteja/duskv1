@@ -30,11 +30,14 @@ api.interceptors.response.use(
 export const get = async <T>(url: string): Promise<ApiResponse<T>> => {
   try {
     const response = await api.get<ApiResponse<T>>(url);
-    return response;
-  } catch (error) {
+    return {
+      data: response.data,
+      error: null,
+    };
+  } catch (error: any) {
     return {
       data: null as unknown as T,
-      error: error.response?.data?.message || 'An error occurred',
+      error: error?.response?.data?.message || 'An error occurred',
     };
   }
 };
@@ -45,11 +48,14 @@ export const post = async <T>(
 ): Promise<ApiResponse<T>> => {
   try {
     const response = await api.post<ApiResponse<T>>(url, data);
-    return response;
-  } catch (error) {
+    return {
+      data: response.data,
+      error: null,
+    };
+  } catch (error: any) {
     return {
       data: null as unknown as T,
-      error: error.response?.data?.message || 'An error occurred',
+      error: error?.response?.data?.message || 'An error occurred',
     };
   }
 };
